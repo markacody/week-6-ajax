@@ -10,12 +10,14 @@ $(document).ready(function(){
 		var button = $("<button>").text(topics[i]); 
 		$("#topicButtons").append(button);
 	}
+
 	//listen for clicks on the buttons
 	$("#topicButtons").on("click", function(e){
-		topic = $(this).text().val().trim();
+		topic = $(this).val().trim();
 		//call a function to query the giphy API
 		queryGiphyAPI();
 	});
+	
 	//listen for new input from the form 
 	$("#addTopic").on("click", function(){
 
@@ -41,18 +43,16 @@ $(document).ready(function(){
 		        })
 		        .done(function(response) {
 		        	console.log(response);
-		        	var imgURL = response.data[0].images.original_still.url;
-		        	var rating = response.data[0].rating;
-		        	var type = response.data[0].type;
-		        	$("#topix").append(rating + '<br>' + type);
-		        	$("#topix").append('<img src=' + imgURL + '>');
-		        	//for (i=0; i<=4; i++){
-		        	//var newContents = $('table').children().eq(i).children('tr').eq(1).children('td');
-            		//secondRowTds.eq(0).text(response.Title);
-            		//secondRowTds.eq(1).text(response.Year);
-            		//secondRowTds.eq(2).text(response.Actors);
-		        	//}
-
+		        	       	
+		        	for (i=0; i<=9; i++){
+		        		var imgURL = response.data[i].images.original_still.url;
+		        		var gifURL = response.data[i].images.original.url;
+		        		var rating = response.data[i].rating;
+		        		var type = response.data[i].type; 
+		        		$("#topix").append('<span class="rating">' + 'Rating: ' + rating);
+		        		$("#topix").append('<img src=' + imgURL + '>');
+		        	}
+		        	return gifURL;
 		        });		       
 	};/*END query GIPHY API */
 	//listen for clicks on an image and start/stop giphy image
